@@ -1,6 +1,6 @@
 name        : t3code-nightly-bin
 version     : "0.0.46-nightly.20261006.2735"
-release     : 1
+release     : 2
 homepage    : https://github.com/pingdotgg/t3code
 upstreams   :
     - https://github.com/pingdotgg/t3code/releases/download/v0.0.46-nightly.20261006.2735/T3-Code-0.0.46-nightly.20261006.2735-amd64.deb:
@@ -30,8 +30,11 @@ install     : |
     %install_dir %(installroot)$appdir
     cp -a "deb/opt/T3 Code (Nightly)/." %(installroot)$appdir/
 
-    # node-pty ships an arm64 prebuild too, which would add an unsatisfiable aarch64 dependency
-    rm -rv %(installroot)$appdir/resources/app.asar.unpacked/node_modules/node-pty/prebuilds/linux-arm64
+    # Some node modules ship arm64 and musl builds next to the x64 glibc one. They are
+    # never loaded here and would add dependencies moss can't satisfy, so drop them.
+    modules=%(installroot)$appdir/resources/app.asar.unpacked/node_modules
+    rm -rv $modules/node-pty/prebuilds/linux-arm64
+    find $modules -mindepth 1 -maxdepth 2 -type d -name '*-linux-x64-musl' -exec rm -rv {} +
 
     %install_dir %(installroot)%(bindir)
     ln -srv %(installroot)$appdir/t3code %(installroot)%(bindir)/t3code
