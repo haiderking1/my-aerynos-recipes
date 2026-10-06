@@ -1,0 +1,94 @@
+#!/usr/bin/env bash
+# Rebuilds packages into the local moss repo when upstream releases a new version,
+# then commits and pushes the updated recipe. Afterwards `sudo moss sync -u` installs them.
+#
+# Usage: ./autoupdate [package...]   (default: every package that has an update.sh)
+#
+# Each <package>/update.sh is sourced and must define `latest`, which prints
+#   <version> <download url> [sha256]
+# It may also set MIN_AGE_HOURS to update at most that often.
+set -uo pipefail
+
+RECIPES_DIR="$(dirname "$(realpath "$0")")"
+REPO_DIR="${REPO_DIR:-$HOME/.cache/local_repo/x86_64}"
+
+update_package() {
+    local name=$1 out latest url digest current age_hours
+    cd "$RECIPES_DIR/$name"
+
+    MIN_AGE_HOURS=0
+    source ./update.sh
+
+    if (( MIN_AGE_HOURS > 0 )); then
+        age_hours=$(( ($(date +%s) - $(stat -c %Y stone.yaml)) / 3600 ))
+        if (( age_hours < MIN_AGE_HOURS )); then
+            echo "$name was updated ${age_hours}h ago, next check after ${MIN_AGE_HOURS}h"
+            return 0
+        fi
+    fi
+
+    out=$(latest)
+    read -r latest url digest <<<"$out"
+    if [[ -z "$latest" || -z "$url" ]]; then
+        echo "could not work out the latest $name release" >&2
+        return 1
+    fi
+
+    current="$(sed -nE 's/^version *: *"?([^"]+)"?/\1/p' stone.yaml)"
+    if [[ "$latest" == "$current" ]]; then
+        echo "$name is up to date ($current)"
+        return 0
+    fi
+
+    echo "Updating $name: $current -> $latest"
+    cp stone.yaml stone.yaml.bak
+    trap 'mv -f stone.yaml.bak stone.yaml; echo "Update failed, $name recipe restored" >&2' ERR
+
+    boulder recipe update -y --ver "$latest" -u "$url"
+
+    # Make sure the hash boulder computed matches the one upstream publishes
+    if [[ -n "$digest" ]] && ! grep -q "$digest" stone.yaml; then
+        echo "sha256 mismatch with upstream digest ($digest)" >&2
+        false
+    fi
+
+    rm -f ./*.stone
+    boulder build -y stone.yaml
+
+    rm -f "$REPO_DIR/$name"-[0-9]*.stone
+    cp "$name"-[0-9]*.stone "$REPO_DIR"/
+    moss index "$REPO_DIR"
+
+    trap - ERR
+    rm -f stone.yaml.bak
+    echo "Built $name $latest, run 'sudo moss sync -u' to install it"
+
+    # The package is already built, so a failed push only warns
+    if git add -- . && git commit -q -m "$name: Update to $latest" -- . && git push -q; then
+        echo "Pushed $name $latest to GitHub"
+    else
+        echo "warning: could not push the $name update to GitHub" >&2
+    fi
+}
+
+if (( $# > 0 )); then
+    packages=("$@")
+else
+    packages=()
+    for f in "$RECIPES_DIR"/*/update.sh; do
+        packages+=("$(basename "$(dirname "$f")")")
+    done
+fi
+
+failed=()
+for name in "${packages[@]}"; do
+    echo "== $name"
+    # Subshell per package: set -e applies inside it, and one failure doesn't stop the rest
+    ( set -eEuo pipefail; update_package "$name" )
+    (( $? == 0 )) || failed+=("$name")
+done
+
+if (( ${#failed[@]} > 0 )); then
+    echo "FAILED: ${failed[*]}" >&2
+    exit 1
+fi

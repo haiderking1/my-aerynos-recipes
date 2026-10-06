@@ -31,8 +31,12 @@ sudo moss install <package>
 
 ## Updates
 
-Packages with an `autoupdate.sh` (Zen, Cursor, T3 Code) check upstream for a new release, update the recipe,
-rebuild and re-index the local repo. T3 Code nightlies are picked up at most once a day. Run them from a systemd user timer and new versions arrive with
+`./autoupdate` checks every package that has an `update.sh` (Zen, Cursor, T3 Code) for a new upstream
+release, updates the recipe, rebuilds, re-indexes the local repo and commits + pushes the recipe.
+`./autoupdate cursor-bin` checks just one. A failure in one package doesn't stop the others.
+
+Each `update.sh` only defines `latest`, which prints `<version> <url> [sha256]`, and can set
+`MIN_AGE_HOURS` (T3 Code nightlies are picked up at most once a day). Run them from a systemd user timer and new versions arrive with
 `sudo moss sync -u` like everything else. Needs `jq`.
 
 ## License
