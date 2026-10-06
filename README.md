@@ -13,6 +13,17 @@ for software that is not in the official repos.
 
 ## Build and install
 
+With [just](https://github.com/casey/just), run `just` to list the shortcuts. Package names are
+optional inside a package folder:
+
+```sh
+just local cursor-bin   # build it and put it in the local moss repo
+just bump audio-panel   # bump the release before rebuilding a changed recipe
+just update             # check upstream for new releases
+```
+
+By hand:
+
 ```sh
 cd <package>
 boulder build stone.yaml
