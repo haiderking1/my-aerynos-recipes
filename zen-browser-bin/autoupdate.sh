@@ -44,3 +44,10 @@ moss index "$REPO_DIR"
 trap - ERR
 rm -f stone.yaml.bak
 echo "Built zen-browser-bin $latest, run 'sudo moss sync -u' to install it"
+
+# Publish the updated recipe. The package is already built, so a failed push only warns.
+if git add -- . && git commit -q -m "zen-browser-bin: Update to $latest" -- . && git push -q; then
+    echo "Pushed zen-browser-bin $latest to GitHub"
+else
+    echo "warning: could not push the zen-browser-bin update to GitHub" >&2
+fi
