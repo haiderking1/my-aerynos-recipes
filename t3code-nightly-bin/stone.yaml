@@ -1,0 +1,45 @@
+name        : t3code-nightly-bin
+version     : "0.0.46-nightly.20261006.2735"
+release     : 1
+homepage    : https://github.com/pingdotgg/t3code
+upstreams   :
+    - https://github.com/pingdotgg/t3code/releases/download/v0.0.46-nightly.20261006.2735/T3-Code-0.0.46-nightly.20261006.2735-amd64.deb:
+        hash: 98630812a9888146557920d6a371609c4c0a64526837e3c197300c71b48543ed
+        unpack: false
+summary     : T3 Code desktop app, nightly builds (official binary version)
+description : |
+    T3 Code, a desktop app for coding agents. Repackaged from the official upstream
+    nightly .deb release.
+license     : MIT
+builddeps   :
+    - binary(bsdtar)
+rundeps     :
+    - xdg-utils
+# Prebuilt upstream binaries, leave them untouched
+debug       : false
+strip       : false
+install     : |
+    export appdir=%(libdir)/t3code-nightly
+
+    # Only data.tar.xz matters; the deb's scripts handle apt alternatives and AppArmor
+    bsdtar --no-same-owner -xf %(sourcedir)/T3-Code-%(version)-amd64.deb data.tar.xz
+    mkdir -p deb
+    bsdtar --no-same-owner -xf data.tar.xz -C deb
+
+    # Upstream installs to "/opt/T3 Code (Nightly)", move it somewhere without spaces
+    %install_dir %(installroot)$appdir
+    cp -a "deb/opt/T3 Code (Nightly)/." %(installroot)$appdir/
+
+    # node-pty ships an arm64 prebuild too, which would add an unsatisfiable aarch64 dependency
+    rm -rv %(installroot)$appdir/resources/app.asar.unpacked/node_modules/node-pty/prebuilds/linux-arm64
+
+    %install_dir %(installroot)%(bindir)
+    ln -srv %(installroot)$appdir/t3code %(installroot)%(bindir)/t3code
+
+    sed 's#^Exec=.*#Exec='"$appdir"'/t3code %%U#' deb/usr/share/applications/t3code.desktop \
+        | %install_file /dev/stdin %(installroot)%(datadir)/applications/t3code.desktop
+
+    for icon in deb/usr/share/icons/hicolor/*/apps/t3code.png; do
+        size=$(basename "$(dirname "$(dirname "$icon")")")
+        %install_file "$icon" %(installroot)%(datadir)/icons/hicolor/$size/apps/t3code.png
+    done
