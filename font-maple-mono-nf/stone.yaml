@@ -1,0 +1,19 @@
+name        : font-maple-mono-nf
+version     : "7.9"
+release     : 1
+homepage    : https://font.subf.dev/
+upstreams   :
+    - https://github.com/subframe7536/maple-font/releases/download/v7.9/MapleMono-NF.zip:
+        hash: 59098b87c895d871635d37680e88000ae2b2b25b55428195b228ec589e35fb89
+        unpack: false
+summary     : Maple Mono NF - monospace font with round corners, ligatures and Nerd Font icons
+description : |
+    Maple Mono is an open source monospace font with round corners, ligatures and Nerd Font icons,
+    designed for a smooth coding experience. This is the Nerd Font (NF) variant.
+license     : OFL-1.1
+install     : |
+    %install_dir %(installroot)%(datadir)/fonts/truetype/maple-mono-nf
+    bsdtar-static --no-same-owner -xf %(sourcedir)/MapleMono-NF.zip -C %(installroot)%(datadir)/fonts/truetype/maple-mono-nf
+
+    # Keep only the fonts
+    find %(installroot)%(datadir)/fonts/truetype/maple-mono-nf -type f ! -name '*.ttf' -delete -print

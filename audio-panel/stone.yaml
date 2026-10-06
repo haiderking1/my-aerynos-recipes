@@ -1,0 +1,19 @@
+name        : audio-panel
+version     : "0.1.0"
+release     : 2
+homepage    : https://github.com/haiderking1/my-aerynos-recipes
+summary     : macOS-style sound menu for Waybar
+description : |
+    Small GTK4 layer-shell popup listing PipeWire output and input devices with
+    volume sliders. Click a device to make it the default.
+license     : MIT
+builddeps   :
+    - pkgconfig(gtk4)
+    - pkgconfig(gtk4-layer-shell-0)
+rundeps     :
+    - binary(wpctl)
+build       : |
+    $CC $CFLAGS -o audio-panel %(pkgdir)/audio-panel.c \
+        $(pkg-config --cflags --libs gtk4 gtk4-layer-shell-0) $LDFLAGS
+install     : |
+    %install_exe audio-panel %(installroot)%(bindir)/audio-panel

@@ -1,0 +1,44 @@
+name        : cursor-bin
+version     : "3.23.23"
+release     : 1
+homepage    : https://cursor.com/
+upstreams   :
+    - https://downloads.cursor.com/production/2dac2428994fe34f12658d9ecad1541b98db2c04/linux/x64/deb/amd64/deb/cursor_3.23.23_amd64.deb:
+        hash: 74759a4d67c116ee9603452c02e86723fb03c139fb4f1cc0e8de609d81672deb
+        unpack: false
+summary     : Cursor - The AI Code Editor (official binary version)
+description : |
+    Cursor, the AI code editor. Repackaged from the official upstream .deb release.
+license     : Proprietary
+builddeps   :
+    - binary(bsdtar)
+rundeps     :
+    - ca-certificates
+    - xdg-utils
+# Prebuilt upstream binaries, leave them untouched
+debug       : false
+strip       : false
+install     : |
+    export appdir=%(libdir)/cursor
+
+    # Only data.tar.xz matters; the deb's /etc files and apt scripts are Debian-specific
+    bsdtar --no-same-owner -xf %(sourcedir)/cursor_%(version)_amd64.deb data.tar.xz
+    mkdir -p deb
+    bsdtar --no-same-owner -xf data.tar.xz -C deb ./usr
+
+    %install_dir %(installroot)$appdir
+    cp -a deb/usr/share/cursor/. %(installroot)$appdir/
+
+    %install_dir %(installroot)%(bindir)
+    ln -srv %(installroot)$appdir/bin/cursor %(installroot)%(bindir)/cursor
+
+    for f in cursor.desktop cursor-url-handler.desktop; do
+        sed 's#/usr/share/cursor/#'"$appdir"'/#g' deb/usr/share/applications/$f \
+            | %install_file /dev/stdin %(installroot)%(datadir)/applications/$f
+    done
+
+    %install_file deb/usr/share/pixmaps/co.anysphere.cursor.png %(installroot)%(datadir)/pixmaps/co.anysphere.cursor.png
+    %install_file deb/usr/share/mime/packages/cursor-workspace.xml %(installroot)%(datadir)/mime/packages/cursor-workspace.xml
+    %install_file deb/usr/share/appdata/cursor.appdata.xml %(installroot)%(datadir)/metainfo/cursor.appdata.xml
+    %install_file deb/usr/share/bash-completion/completions/cursor %(installroot)%(bashcompletionsdir)/cursor
+    %install_file deb/usr/share/zsh/vendor-completions/_cursor %(installroot)%(zshcompletionsdir)/_cursor

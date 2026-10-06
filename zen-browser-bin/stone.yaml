@@ -1,0 +1,38 @@
+name        : zen-browser-bin
+version     : "1.23b"
+release     : 1
+homepage    : https://zen-browser.app/
+upstreams   :
+    - https://github.com/zen-browser/desktop/releases/download/1.23b/zen.linux-x86_64.tar.xz : 9ad79f50f52a60b85f1a0787de227235934ea0bd994f79b739fa806081b3fcf0
+summary     : Zen Browser - Firefox-based browser (official binary version)
+description : |
+    Zen Browser, a calm Firefox-based web browser. Repackaged from the official upstream binary release.
+license     : MPL-2.0
+rundeps     :
+    - xdg-desktop-portal
+rundeps-exclude:
+    # Bundled in /usr/lib/zen-browser
+    - 'soname\(libmozsqlite3\.so\(.*\)\)'
+    - 'soname\(libnss3\.so\(.*\)\)'
+    - 'soname\(libnssutil3\.so\(.*\)\)'
+    - 'soname\(libsmime3\.so\(.*\)\)'
+    - 'soname\(libssl3\.so\(.*\)\)'
+# Prebuilt upstream binaries, leave them untouched
+debug       : false
+strip       : false
+install     : |
+    export zendir=%(libdir)/zen-browser
+    %install_dir %(installroot)$zendir
+    cp -a %(workdir)/. %(installroot)$zendir/
+
+    # Updates are handled by moss, not the built-in updater
+    rm -fv %(installroot)$zendir/updater %(installroot)$zendir/updater.ini %(installroot)$zendir/update-settings.ini
+    %install_file %(pkgdir)/policies.json %(installroot)$zendir/distribution/policies.json
+
+    %install_exe %(pkgdir)/zen-browser.sh %(installroot)%(bindir)/zen-browser
+    %install_file %(pkgdir)/zen-browser.desktop %(installroot)%(datadir)/applications/zen-browser.desktop
+
+    for i in 16 32 48 64 128; do
+        %install_dir %(installroot)%(datadir)/icons/hicolor/${i}x${i}/apps
+        ln -srv %(installroot)$zendir/browser/chrome/icons/default/default${i}.png %(installroot)%(datadir)/icons/hicolor/${i}x${i}/apps/zen-browser.png
+    done

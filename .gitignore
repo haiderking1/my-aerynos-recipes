@@ -1,0 +1,8 @@
+# Built packages, rebuild them from the recipes
+*.stone
+
+# Left by autoupdate.sh while it is updating a recipe
+*.bak
+
+# Kept local only
+wallpicker/

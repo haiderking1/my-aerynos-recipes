@@ -1,0 +1,30 @@
+/** Human readable report. This is not consumed by boulder */
+{
+	"manifest-version": "0.2",
+	"packages": {
+		"font-maple-mono-nf": {
+			"files": [
+				"/usr/share/fonts/truetype/maple-mono-nf/MapleMono-NF-Bold.ttf",
+				"/usr/share/fonts/truetype/maple-mono-nf/MapleMono-NF-BoldItalic.ttf",
+				"/usr/share/fonts/truetype/maple-mono-nf/MapleMono-NF-ExtraBold.ttf",
+				"/usr/share/fonts/truetype/maple-mono-nf/MapleMono-NF-ExtraBoldItalic.ttf",
+				"/usr/share/fonts/truetype/maple-mono-nf/MapleMono-NF-ExtraLight.ttf",
+				"/usr/share/fonts/truetype/maple-mono-nf/MapleMono-NF-ExtraLightItalic.ttf",
+				"/usr/share/fonts/truetype/maple-mono-nf/MapleMono-NF-Italic.ttf",
+				"/usr/share/fonts/truetype/maple-mono-nf/MapleMono-NF-Light.ttf",
+				"/usr/share/fonts/truetype/maple-mono-nf/MapleMono-NF-LightItalic.ttf",
+				"/usr/share/fonts/truetype/maple-mono-nf/MapleMono-NF-Medium.ttf",
+				"/usr/share/fonts/truetype/maple-mono-nf/MapleMono-NF-MediumItalic.ttf",
+				"/usr/share/fonts/truetype/maple-mono-nf/MapleMono-NF-Regular.ttf",
+				"/usr/share/fonts/truetype/maple-mono-nf/MapleMono-NF-SemiBold.ttf",
+				"/usr/share/fonts/truetype/maple-mono-nf/MapleMono-NF-SemiBoldItalic.ttf",
+				"/usr/share/fonts/truetype/maple-mono-nf/MapleMono-NF-Thin.ttf",
+				"/usr/share/fonts/truetype/maple-mono-nf/MapleMono-NF-ThinItalic.ttf"
+			],
+			"name": "font-maple-mono-nf"
+		}
+	},
+	"source-name": "font-maple-mono-nf",
+	"source-release": "1",
+	"source-version": "7.9"
+}
