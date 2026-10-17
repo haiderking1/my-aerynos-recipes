@@ -1,10 +1,10 @@
 name        : cursor-bin
-version     : "3.23.23"
-release     : 1
+version     : "3.25.6"
+release     : 2
 homepage    : https://cursor.com/
 upstreams   :
-    - https://downloads.cursor.com/production/2dac2428994fe34f12658d9ecad1541b98db2c04/linux/x64/deb/amd64/deb/cursor_3.23.23_amd64.deb:
-        hash: 74759a4d67c116ee9603452c02e86723fb03c139fb4f1cc0e8de609d81672deb
+    - https://downloads.cursor.com/production/f0df777c412b670d09e3eaf214967d779e67c088/linux/x64/deb/amd64/deb/cursor_3.25.6_amd64.deb:
+        hash: 2b64b908214a8fa47e09303de80d8a25d78702216e2f765dcac73f8ae9c1ee15
         unpack: false
 summary     : Cursor - The AI Code Editor (official binary version)
 description : |
