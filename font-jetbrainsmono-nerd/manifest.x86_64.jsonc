@@ -1,0 +1,33 @@
+/** Human readable report. This is not consumed by boulder */
+{
+	"manifest-version": "0.2",
+	"packages": {
+		"font-jetbrainsmono-nerd": {
+			"build-depends": [
+				"binary(bsdtar)"
+			],
+			"files": [
+				"/usr/share/fonts/truetype/jetbrainsmono-nerd/JetBrainsMonoNerdFont-Bold.ttf",
+				"/usr/share/fonts/truetype/jetbrainsmono-nerd/JetBrainsMonoNerdFont-BoldItalic.ttf",
+				"/usr/share/fonts/truetype/jetbrainsmono-nerd/JetBrainsMonoNerdFont-ExtraBold.ttf",
+				"/usr/share/fonts/truetype/jetbrainsmono-nerd/JetBrainsMonoNerdFont-ExtraBoldItalic.ttf",
+				"/usr/share/fonts/truetype/jetbrainsmono-nerd/JetBrainsMonoNerdFont-ExtraLight.ttf",
+				"/usr/share/fonts/truetype/jetbrainsmono-nerd/JetBrainsMonoNerdFont-ExtraLightItalic.ttf",
+				"/usr/share/fonts/truetype/jetbrainsmono-nerd/JetBrainsMonoNerdFont-Italic.ttf",
+				"/usr/share/fonts/truetype/jetbrainsmono-nerd/JetBrainsMonoNerdFont-Light.ttf",
+				"/usr/share/fonts/truetype/jetbrainsmono-nerd/JetBrainsMonoNerdFont-LightItalic.ttf",
+				"/usr/share/fonts/truetype/jetbrainsmono-nerd/JetBrainsMonoNerdFont-Medium.ttf",
+				"/usr/share/fonts/truetype/jetbrainsmono-nerd/JetBrainsMonoNerdFont-MediumItalic.ttf",
+				"/usr/share/fonts/truetype/jetbrainsmono-nerd/JetBrainsMonoNerdFont-Regular.ttf",
+				"/usr/share/fonts/truetype/jetbrainsmono-nerd/JetBrainsMonoNerdFont-SemiBold.ttf",
+				"/usr/share/fonts/truetype/jetbrainsmono-nerd/JetBrainsMonoNerdFont-SemiBoldItalic.ttf",
+				"/usr/share/fonts/truetype/jetbrainsmono-nerd/JetBrainsMonoNerdFont-Thin.ttf",
+				"/usr/share/fonts/truetype/jetbrainsmono-nerd/JetBrainsMonoNerdFont-ThinItalic.ttf"
+			],
+			"name": "font-jetbrainsmono-nerd"
+		}
+	},
+	"source-name": "font-jetbrainsmono-nerd",
+	"source-release": "1",
+	"source-version": "3.5.1"
+}

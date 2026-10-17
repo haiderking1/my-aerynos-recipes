@@ -1,0 +1,20 @@
+name        : font-jetbrainsmono-nerd
+version     : "3.5.1"
+release     : 1
+homepage    : https://www.nerdfonts.com/
+upstreams   :
+    - https://github.com/ryanoasis/nerd-fonts/releases/download/v3.5.1/JetBrainsMono.tar.xz:
+        hash: 04d5e8f903693f9dd13e16f867e994834e681eb3c72c0d337a770dcda09010cf
+        unpack: false
+summary     : Patched font JetBrains Mono from the nerd fonts library
+description : |
+    JetBrains Mono patched with Nerd Font icons. Only the "JetBrainsMono Nerd Font"
+    family is installed, not the Mono/Propo/NL variants.
+license     : OFL-1.1
+builddeps   :
+    - binary(bsdtar)
+install     : |
+    mkdir -p fonts
+    bsdtar --no-same-owner -xf %(sourcedir)/JetBrainsMono.tar.xz -C fonts
+    %install_dir %(installroot)%(datadir)/fonts/truetype/jetbrainsmono-nerd
+    cp -v fonts/JetBrainsMonoNerdFont-*.ttf %(installroot)%(datadir)/fonts/truetype/jetbrainsmono-nerd/

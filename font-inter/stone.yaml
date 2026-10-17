@@ -1,0 +1,18 @@
+name        : font-inter
+version     : "4.1"
+release     : 1
+homepage    : https://rsms.me/inter/
+upstreams   :
+    - https://github.com/rsms/inter/releases/download/v4.1/Inter-4.1.zip:
+        hash: 9883fdd4a49d4fb66bd8177ba6625ef9a64aa45899767dde3d36aa425756b11e
+        unpack: false
+summary     : Inter - a typeface carefully crafted for computer screens
+description : |
+    Inter is a variable font family carefully crafted and designed for computer screens.
+    This installs the "Inter" and "Inter Display" families in all weights (Inter.ttc).
+license     : OFL-1.1
+builddeps   :
+    - binary(bsdtar)
+install     : |
+    bsdtar --no-same-owner -xf %(sourcedir)/Inter-%(version).zip Inter.ttc
+    %install_file Inter.ttc %(installroot)%(datadir)/fonts/truetype/inter/Inter.ttc

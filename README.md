@@ -10,6 +10,8 @@ for software that is not in the official repos.
 | `zen-browser-bin` | [Zen Browser](https://zen-browser.app), repackaged from the official tarball |
 | `t3code-nightly-bin` | [T3 Code](https://github.com/pingdotgg/t3code) desktop app, nightly builds, repackaged from the official `.deb` |
 | `font-maple-mono-nf` | [Maple Mono NF](https://github.com/subframe7536/maple-font) font |
+| `font-inter` | [Inter](https://rsms.me/inter/) font |
+| `font-jetbrainsmono-nerd` | JetBrainsMono [Nerd Font](https://www.nerdfonts.com/) |
 
 ## Build and install
 
