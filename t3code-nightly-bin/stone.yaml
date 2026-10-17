@@ -1,10 +1,10 @@
 name        : t3code-nightly-bin
-version     : "0.0.46-nightly.20261006.2735"
-release     : 2
+version     : "0.1.1-nightly.20261017.3238"
+release     : 3
 homepage    : https://github.com/pingdotgg/t3code
 upstreams   :
-    - https://github.com/pingdotgg/t3code/releases/download/v0.0.46-nightly.20261006.2735/T3-Code-0.0.46-nightly.20261006.2735-amd64.deb:
-        hash: 98630812a9888146557920d6a371609c4c0a64526837e3c197300c71b48543ed
+    - https://github.com/pingdotgg/t3code/releases/download/v0.1.1-nightly.20261017.3238/T3-Code-0.1.1-nightly.20261017.3238-amd64.deb:
+        hash: da149d79c571eb3e79b506a6993c09af6aac936fd29b064f98ad84c05ba8aa4f
         unpack: false
 summary     : T3 Code desktop app, nightly builds (official binary version)
 description : |
