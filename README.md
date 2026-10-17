@@ -12,6 +12,7 @@ for software that is not in the official repos.
 | `font-maple-mono-nf` | [Maple Mono NF](https://github.com/subframe7536/maple-font) font |
 | `font-inter` | [Inter](https://rsms.me/inter/) font |
 | `font-jetbrainsmono-nerd` | JetBrainsMono [Nerd Font](https://www.nerdfonts.com/) |
+| `python-mutagen` | [mutagen](https://mutagen.readthedocs.io), lets yt-dlp embed covers into .opus files |
 
 ## Build and install
 

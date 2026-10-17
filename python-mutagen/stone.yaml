@@ -1,0 +1,19 @@
+name        : python-mutagen
+version     : "1.48.1"
+release     : 1
+homepage    : https://mutagen.readthedocs.io
+upstreams   :
+    - https://files.pythonhosted.org/packages/df/70/1675da133ea92227da41bf5b24e1c66be597ff736a1533ade41da986852f/mutagen-1.48.1.tar.gz : 8f95637ab9f6f305cec6bd1294e197debe207998e3e068596563c74f86b0a173
+summary     : Python module to handle audio metadata
+description : |
+    Mutagen reads and writes audio metadata (ID3, Vorbis comments, MP4 tags, cover art...).
+    yt-dlp needs it to embed thumbnails into .opus/.ogg files.
+license     : GPL-2.0-or-later
+builddeps   :
+    - python(setuptools)
+rundeps     :
+    - python-libs
+build       : |
+    %pyproject_build
+install     : |
+    %pyproject_install
